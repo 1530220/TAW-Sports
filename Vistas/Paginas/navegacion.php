@@ -39,9 +39,9 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-list-ol"></i>Ver Equipos</a></li>
+            <li><a href="?action=listaEquipo"><i class="fa fa-list-ol"></i>Ver Equipos</a></li>
             <!-- Se redirecciona al index con GET correspondinte para que el modelo incluya lo que tenga que incluir -->
-            <li><a href="#"><i class="fa fa-plus-square"></i>Registrar Equipo</a></li>
+            <li><a href="?action=agregarEquipo"><i class="fa fa-plus-square"></i>Registrar Equipo</a></li>
           </ul>
         </li>
 

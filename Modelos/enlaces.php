@@ -5,7 +5,10 @@
 			//Validar que si existe el nombre de la vista 
 			if($enlacesModel=="agregarDeporte" || 
 				$enlacesModel=="editarDeporte" ||
-				$enlacesModel=="listaDeporte"){
+				$enlacesModel=="listaDeporte" ||
+			  	$enlacesModel=="agregarEquipo"||
+			  	$enlacesModel=="editarEquipo"||
+			  	$enlacesModel=="listaEquipo"){
 				//Mostramos el URL concatenado con $enlacesModel
 				$module = "Paginas/".$enlacesModel.".php";
 			}

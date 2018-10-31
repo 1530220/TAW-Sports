@@ -140,7 +140,70 @@
 
     }
 
+    public function guardarDatosEquipo(){
+        	
+        $nombre=$_POST['nombre'];
+        $deporte = $_POST['deporte'];
+        $datosEquipo=array('nombre'=>$nombre,
+    				'deporte'=>$deporte);
+        $respuesta = Datos::guardarEquipo($datosEquipo, "equipo");
+        if ($respuesta== "success") {
+            echo "<script>alert('Equipo agregado correcatamente')</script>";
+        }else{
+            echo "<script>alert('Equipo no agregado')</script>";
+        }
+        	
 	}
 
-	
+	public function obtenerDatosEquipos()
+    {
+        $datosDeEquipos = array();
+        
+        //Esta funcion del modelo no pide la tabla ya que se trata de una union de todas las tres tablas existentes para traer todos los datos completos y entendibles
+        $datosDeEquipos = Datos::traerDatosEquipos();
+
+        return $datosDeEquipos;
+    }
+
+    public function editarDatosEquipo(){
+    	$id = $_GET['id'];
+        $nombre = $_POST['nombre'];
+
+        $datosEquipo = array('id' => $id,
+                            'nombre' => $nombre);
+
+    	$respuesta = Datos::editarEquipo($datosEquipo, "equipo");
+
+    	if($respuesta == "success"){
+            
+            echo '<script> 
+                    alert("Datos guardados correctamente");
+                    window.location.href = "?action=listaEquipo"; 
+                  </script>';
+            
+        }else{
+            echo '<script> alert("Error al guardar") </script>';
+        }
+
+    }
+
+    public function eliminarEquipo(){
+
+        $idEquipo = $_GET['id'];
+        
+        $respuesta = Datos::eliminarDatosEquipo($idEquipo, "equipo");
+
+        //Se notifca al usuario como se realizo en los metodos pasados y si se borro exitosamente lo redirecciona a la pagina principal en donde estan listados todos los equipos
+        if($respuesta == "success"){
+            echo '<script> 
+                    alert("Equipo eliminado");
+                    window.location.href = "?action=listaEquipo";
+                  </script>';
+        }else{
+            echo '<script> alert("Error al eliminar el quipo") </script>';
+        }
+
+    }
+
+	}
 ?>

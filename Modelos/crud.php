@@ -100,7 +100,81 @@
             return "error";
         }
 
-    }    
+    }
+
+    //Funcion que almacena todos los datos de un alumno en su respectiva tabla, tabmien pasada por parametro (el nombre del equipo)
+    public function guardarEquipo($datosEquipo, $tabla){
+
+        //Se prepara el query con el comando INSERT -> DE INSERTAR 
+        $stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, deporte) VALUES(:nombre, :id) ");
+        
+        //Se colocan todos sus parametros especificados, y se relacionan con los datos pasdaos por parametro a esta funcion desde el controladro en modo de array asociativo
+        $stmt->bindParam(":nombre", $datosEquipo["nombre"], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $datosEquipo["deporte"], PDO::PARAM_INT);
+        if($stmt->execute()){
+            return "success";
+        }else{
+            return "error";
+        }
+
+    }  
+
+    public function traerDatosEquipos(){
+
+        $stmt = Conexion::conectar()->prepare("SELECT t1.id as id, t1.nombre as nombre, t2.nombre as deporte FROM equipo as t1 INNER JOIN deporte AS t2 ON t2.id = t1.deporte");
+
+        $stmt->execute();
+
+        $r = array();
+
+        //Se guardan todos los datos en el arreglo antes creado
+        $r = $stmt->FetchAll();
+        
+        
+        return $r;
+
+    }  
+
+
+    public function editarEquipo($datosEquipo, $tabla){
+
+        //Se prepara el query con el comando UPDATE -> DE EDITAR, O ACTUALIZAR
+        $stmt = Conexion::conectar()->prepare("UPDATE $tabla 
+                                               SET nombre = :nombre
+                                               WHERE id = :id ");
+        
+        //Se relacionan todos los parametros con los pasados en el arreglo asociativo desde el controlador
+        $stmt->bindParam(":nombre", $datosEquipo["nombre"], PDO::PARAM_STR);
+        $stmt->bindParam(":id", $datosEquipo["id"] , PDO::PARAM_INT);
+        
+
+        //Y son ejecutados y notificados al controlador para que este les notifique a las vistas para que den un mensaje amigable al usuario
+        if($stmt->execute()){
+            return "success";
+        }else{
+            return "error";
+        }
+
+        $stmt->close();
+
+
+    }
+
+
+    public function eliminarDatosEquipo($id, $tabla){
+
+        $stmt = Conexion::conectar()->prepare("DELETE FROM $tabla WHERE id = :id ");
+
+        $stmt->bindParam(":id", $id , PDO::PARAM_INT);
+
+        //Le informa al controlador si se realizao con exito o no dicha transaccion
+        if($stmt->execute() ){
+            return "success";
+        }else{
+            return "error";
+        }
+
+    }
 
 	}
 ?>
