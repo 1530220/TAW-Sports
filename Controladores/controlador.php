@@ -58,5 +58,89 @@
 			//Retornar los datos de la tabla
 			return $datos->getAllModel($tabla);
 		}
+
+		public function agregarDeporte(){
+        	if(isset($_POST['nombre'])){
+            	$nombre_deporte=$_POST['nombre'];
+            	$datos=array('nombre_deporte'=>$nombre_deporte);
+            	$respuesta = Datos::agregarDeporteModel($datos, 'deporte');
+            	if ($respuesta) {
+            		echo "<script>alert('Deporte agregado correcatamente')</script>";
+            	}else{
+            		echo "<script>alert('Deporte no agregado')</script>";
+            	}
+        	}
+		}
+
+		public function obtenerDatosDeportes()
+    	{
+
+        $datosDeCarreras = array();
+        
+        //Manda llamar el metodo desde el modelo y pasandole la tabla de donde se van a extraer los datos como parametro
+        $datosDeCarreras = Datos::traerDatosDeportes("deporte");
+
+        return $datosDeCarreras;
+    	}
+
+    	public function obtenerDatosDeporteId(){
+        $deporte_id = $_GET['id'];
+
+        $datosDeDeportes = array();
+        
+        //Se manda llamar el metodo del modelo pasandole como parametro la matricula del deporte a traer los datos, de igual forma se hace una union de tablas para obtener la informacion mas entendible, por ello no se pasa el nombre de la tabla como parametro
+        $datosDeDeportes = Datos::obtenerDatosDeDeporteId($deporte_id);
+
+        return $datosDeDeportes;
+    }
+
+    public function editarDatosDeporte(){
+
+        $id = $_GET['id'];
+        $nombre = $_POST['nombre'];
+        
+        
+
+        //Se finaliza de crear los datos, ya con la  foto nueva o en caso de que haya elegido una nueva
+        $datosDeporte = array('id' => $id,
+                            'nombre' => $nombre);
+        
+        //Se manda ese objeto con los datos al modelo para que los almacenen en la tabla pasada por parametro aqui abajo
+        $respuesta = Datos::editarDeporte($datosDeporte, "deporte");
+        
+        //El metodo responde con un success o un error y se realiza las notificaciones pertinentes al usuario
+        if($respuesta=="success"){
+            
+            echo '<script> 
+                    alert("Datos guardados correctamente");
+                    window.location.href = "?action=listaDeporte"; 
+                  </script>';
+            
+        }else{
+            echo '<script> alert("Error al guardar") </script>';
+        }
+
+    }
+
+    public function eliminarDeporte(){
+
+        $id = $_GET['id'];
+        
+        $respuesta = Datos::eliminarDatosDeporte($id, "deporte");
+
+        //Se notifca al usuario como se realizo en los metodos pasados y si se borro exitosamente lo redirecciona a la pagina principal en donde estan listados todos los usuarios
+        if($respuesta == "success"){
+            echo '<script> 
+                    alert("Deporte eliminado");
+                    window.location.href = "?action=listaDeporte";
+                  </script>';
+        }else{
+            echo '<script> alert("Error al eliminar") </script>';
+        }
+
+    }
+
 	}
+
+	
 ?>

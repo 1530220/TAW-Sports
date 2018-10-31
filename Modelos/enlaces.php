@@ -3,7 +3,9 @@
 		//Function con el parametro $enlacesModel que se recibe a travez del controlador
 		public function enlacesPaginasModel($enlacesModel){
 			//Validar que si existe el nombre de la vista 
-			if($enlacesModel=="verProductos"){
+			if($enlacesModel=="agregarDeporte" || 
+				$enlacesModel=="editarDeporte" ||
+				$enlacesModel=="listaDeporte"){
 				//Mostramos el URL concatenado con $enlacesModel
 				$module = "Paginas/".$enlacesModel.".php";
 			}

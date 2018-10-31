@@ -26,8 +26,8 @@
               </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-list-ol"></i>Ver Deportes</a></li>
-            <li><a href="#"><i class="fa fa-plus-square"></i>Agregar Deporte</a></li>
+            <li><a href="?action=listaDeporte"><i class="fa fa-list-ol"></i>Ver Deportes</a></li>
+            <li><a href="?action=agregarDeporte"><i class="fa fa-plus-square"></i>Agregar Deporte</a></li>
           </ul>
         </li>
         
